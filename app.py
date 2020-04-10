@@ -5,18 +5,22 @@ import pprint
 import time
 import random
 from aylienapiclient import textapi
+import os
+from dotenv import load_dotenv
 
-app = Flask(__name__, instance_relative_config=True)
+load_dotenv()
+app = Flask(__name__)
 app.config.from_object('config')
 app.config.from_pyfile('config.py')
 
-api_key = app.config["API_KEY"]
-aylien_app_id = app.config["AYLIEN_APP_ID"]
-aylien_key = app.config["AYLIEN_KEY"]
-text_analytics_base_url = app.config["TEXT_ANALYTICS_BASE_URL"]
-text_subscription_key = app.config["TEXT_SUBSCRIPTION_KEY"]
+api_key = os.environ.get("API_KEY")
+aylien_app_id = os.environ.get("AYLIEN_APP_ID")
+aylien_key = os.environ.get("AYLIEN_KEY")
+text_subscription_key =  os.environ.get("TEXT_SUBSCRIPTION_KEY")
+img_subscription_key = os.environ.get("IMG_SUBSCRIPTION_KEY")
+
 vision_base_url = app.config["VISION_BASE_URL"]
-img_subscription_key = app.config["IMG_SUBSCRIPTION_KEY"]
+text_analytics_base_url = app.config["TEXT_ANALYTICS_BASE_URL"]
 text_recognition_url = vision_base_url + "recognizeText"
 text_client = textapi.Client(aylien_app_id, aylien_key)
 
