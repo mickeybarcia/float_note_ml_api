@@ -1,11 +1,11 @@
 from flask import Flask, jsonify, request, abort
+from dotenv import load_dotenv
 import requests
 import datetime
 import pprint
 import time
 import random
 import os
-from dotenv import load_dotenv
 
 from keywords import text_to_keywords
 import summary
