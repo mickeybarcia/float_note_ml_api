@@ -1,5 +1,7 @@
 from flask import Flask, jsonify, request, abort
 from dotenv import load_dotenv
+from werkzeug.exceptions import HTTPException
+from werkzeug.exceptions import default_exceptions
 import requests
 import datetime
 import pprint
@@ -27,6 +29,13 @@ def check_auth(headers):
 			abort(401)
 	except:
 		abort(401)
+
+@app.errorhandler(Exception)
+def handle_error(e):
+    code = 500
+    if isinstance(e, HTTPException):
+        code = e.code
+    return jsonify(error=str(e)), code
 
 @app.route('/entry-image', methods = ['POST'])
 def generate_entry_ml_from_image():
@@ -60,4 +69,6 @@ def get_summary():
 	return jsonify({"summary": summary_text})	
 
 if __name__ == "__main__":
+	for ex in default_exceptions:
+		app.register_error_handler(ex, handle_error)
 	app.run(debug = True)
