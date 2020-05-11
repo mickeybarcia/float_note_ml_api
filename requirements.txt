@@ -6,7 +6,6 @@ nltk==3.4.5
 rake-nltk==1.0.4
 Pillow==7.1.1
 pyocr==0.7.2
-textblob==0.16.0
+textblob==0.15.3
 numpy==1.18.2
 networkx==2.4
-pytesseract
