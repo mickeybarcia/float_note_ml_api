@@ -42,7 +42,7 @@ def handle_error(e):
 def generate_entry_ml_from_image():
 	check_auth(request.headers)
 	images = request.files.getlist("page")
-	print(images)
+	print(request.files)
 	time.sleep(3)
 	text = img_to_text(images)
 	if request.args.get('analyze') == "1":
