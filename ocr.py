@@ -3,7 +3,6 @@ import sys
 import pyocr
 import pyocr.builders
 
-pyocr.pytesseract.tesseract_cmd = '/app/.apt/usr/bin/tesseract'
 tools = pyocr.get_available_tools()
 tool = tools[0]
 
