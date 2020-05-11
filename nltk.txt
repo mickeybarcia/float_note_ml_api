@@ -3,3 +3,4 @@ wordnet
 punkt
 averaged_perceptron_tagger
 brown
+movie_reviews
