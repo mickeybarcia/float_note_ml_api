@@ -2,7 +2,6 @@ from PIL import Image
 import sys
 import pyocr
 import pyocr.builders
-import pytesseract
 
 tools = pyocr.get_available_tools()
 tool = tools[0]
