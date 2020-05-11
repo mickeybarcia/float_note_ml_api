@@ -49,6 +49,7 @@ def generate_entry_ml_from_image():
 		return jsonify({"text": text, "score": score, "keywords": keywords})
 	else:
 		print("just getting the text")
+		print(text)
 		return jsonify({"text": text})
 
 @app.route('/entry-text', methods = ['POST'])
