@@ -44,9 +44,7 @@ def generate_entry_ml_from_image():
 	if request.args.get('analyze') == "1":
 		print("analyzing images")
 		score = text_to_sentiment(text)
-		print("scored")
 		keywords = text_to_keywords(text)
-		print(keywords)
 		return jsonify({"text": text, "score": score, "keywords": keywords})
 	else:
 		print("just getting the text")
