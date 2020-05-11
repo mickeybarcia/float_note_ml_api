@@ -41,6 +41,7 @@ def handle_error(e):
 @app.route('/entry-image', methods = ['POST'])
 def generate_entry_ml_from_image():
 	check_auth(request.headers)
+	time.sleep(3)
 	images = request.files.getlist("page")
 	text = img_to_text(images)
 	if request.args.get('analyze') == "1":
@@ -51,7 +52,6 @@ def generate_entry_ml_from_image():
 	else:
 		print("just getting the text")
 		print(text)
-		time.sleep(3)
 		return jsonify({"text": text})
 
 @app.route('/entry-text', methods = ['POST'])
