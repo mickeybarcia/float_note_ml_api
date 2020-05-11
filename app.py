@@ -9,6 +9,7 @@ import time
 import random
 import os
 
+
 from keywords import text_to_keywords
 import summary
 from ocr import img_to_text
