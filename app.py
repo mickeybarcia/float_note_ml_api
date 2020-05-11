@@ -8,6 +8,7 @@ import pprint
 import time
 import random
 import os
+import time 
 
 from keywords import text_to_keywords
 import summary
@@ -50,6 +51,7 @@ def generate_entry_ml_from_image():
 	else:
 		print("just getting the text")
 		print(text)
+		time.sleep(3)
 		return jsonify({"text": text})
 
 @app.route('/entry-text', methods = ['POST'])
