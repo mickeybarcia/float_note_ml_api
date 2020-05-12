@@ -41,6 +41,7 @@ def handle_error(e):
 @app.route('/entry-image', methods = ['POST'])
 def generate_entry_ml_from_image():
 	check_auth(request.headers)
+	time.sleep(10)
 	images = request.files.getlist("page")
 	print(request.files)
 	text = img_to_text(images)
