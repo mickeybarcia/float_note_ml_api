@@ -31,7 +31,7 @@ def check_auth(headers):
 	except:
 		abort(401)
 
-@app.after_request # blueprint can also be app~~
+@app.after_request 
 def after_request(response):
     header = response.headers
     header['Access-Control-Allow-Origin'] = '*'
@@ -47,8 +47,9 @@ def handle_error(e):
 @app.route('/entry-image', methods = ['POST'])
 def generate_entry_ml_from_image():
 	check_auth(request.headers)
-	images = request.files.getlist("page")
-	print(request.files)
+	print(request.form)
+	#images = request.files.getlist("page")
+	images = []
 	text = img_to_text(images)
 	if request.args.get('analyze') == "1":
 		print("analyzing images")
