@@ -47,8 +47,9 @@ def handle_error(e):
 @app.route('/entry-image', methods = ['POST'])
 def generate_entry_ml_from_image():
 	check_auth(request.headers)
-	#images = request.files.getlist("page")
-	text = img_to_text(request.files.getlist("page"))
+	print(request.files)
+	images = request.files.getlist("page")
+	text = img_to_text(images)
 	if request.args.get('analyze') == "1":
 		print("analyzing images")
 		score = text_to_sentiment(text)

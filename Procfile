@@ -1,1 +1,1 @@
-web: gunicorn -b :$PORT app:app --no-sendfile
+web: gunicorn -b :$PORT app:app
