@@ -1,2 +1,2 @@
-web: waitress-serve --port=$PORT float_note_ml_api.wsgi:application
+web: waitress-serve --port=$PORT app.wsgi:application
 
