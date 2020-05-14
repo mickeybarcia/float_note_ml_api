@@ -45,9 +45,10 @@ def handle_error(e):
     return jsonify(error=str(e)), code
 
 @app.route('/entry-image', methods = ['POST'])
+#web: gunicorn -b :$PORT app:app
 def generate_entry_ml_from_image():
 	check_auth(request.headers)
-	print(request.files)
+	#print(request.files)
 	images = request.files.getlist("page")
 	text = img_to_text(images)
 	if request.args.get('analyze') == "1":
