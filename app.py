@@ -18,6 +18,7 @@ from sentiment import text_to_sentiment
 load_dotenv()
 app = Flask(__name__)
 api_key = os.environ.get("API_KEY")
+img_subscription_key = os.environ.get("IMG_SUBSCRIPTION_KEY")
 
 @app.route('/')
 def index():
@@ -45,12 +46,10 @@ def handle_error(e):
     return jsonify(error=str(e)), code
 
 @app.route('/entry-image', methods = ['POST'])
-#web: gunicorn -b :$PORT app:app
 def generate_entry_ml_from_image():
 	check_auth(request.headers)
-	#print(request.files)
 	images = request.files.getlist("page")
-	text = img_to_text(images)
+	text = img_to_text(images, img_subscription_key)
 	if request.args.get('analyze') == "1":
 		print("analyzing images")
 		score = text_to_sentiment(text)
