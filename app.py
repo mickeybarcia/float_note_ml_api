@@ -32,12 +32,6 @@ def check_auth(headers):
 	except:
 		abort(401)
 
-@app.after_request 
-def after_request(response):
-    header = response.headers
-    header['Access-Control-Allow-Origin'] = '*'
-    return response
-
 @app.errorhandler(Exception)
 def handle_error(e):
     code = 500
@@ -51,13 +45,10 @@ def generate_entry_ml_from_image():
 	images = request.files.getlist("page")
 	text = img_to_text(images, img_subscription_key)
 	if request.args.get('analyze') == "1":
-		print("analyzing images")
 		score = text_to_sentiment(text)
 		keywords = text_to_keywords(text)
 		return jsonify({"text": text, "score": score, "keywords": keywords})
 	else:
-		print("just getting the text")
-		print(text)
 		return jsonify({"text": text})
 
 @app.route('/entry-text', methods = ['POST'])

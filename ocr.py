@@ -32,7 +32,7 @@ def img_to_text(images, img_subscription_key):
             while "recognitionResult" not in analysis:
                 response_final = requests.get(response.headers["Operation-Location"], headers=headers)
                 analysis = response_final.json()
-                time.sleep(1)
+                time.sleep(0.5)
             polygons = [line["text"] for line in analysis["recognitionResult"]["lines"]]
             text_statement += " ".join(polygons)
         except:
