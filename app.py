@@ -27,6 +27,7 @@ def index():
 def check_auth(headers):
 	try:
 		token = headers.get("authorization")
+		print(api_key)
 		if token != "Bearer " + api_key:
 			abort(401)
 	except:
