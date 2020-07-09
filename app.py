@@ -19,6 +19,7 @@ load_dotenv()
 app = Flask(__name__)
 api_key = os.environ.get("API_KEY")
 img_subscription_key = os.environ.get("IMG_SUBSCRIPTION_KEY")
+text_subscription_key = os.environ.get("TEXT_SUBSCRIPTION_KEY")
 
 @app.route('/')
 def index():
@@ -27,7 +28,6 @@ def index():
 def check_auth(headers):
 	try:
 		token = headers.get("authorization")
-		print(api_key)
 		if token != "Bearer " + api_key:
 			abort(401)
 	except:
@@ -44,10 +44,21 @@ def handle_error(e):
 def generate_entry_ml_from_image():
 	check_auth(request.headers)
 	images = request.files.getlist("page")
+	
+	start_time = time.time() 
 	text = img_to_text(images, img_subscription_key)
+	image_time = time.time() 
+	
 	if request.args.get('analyze') == "1":
-		score = text_to_sentiment(text)
+		score = text_to_sentiment(text, text_subscription_key)
+		score_time = time.time() 
+		
 		keywords = text_to_keywords(text)
+		keyword_time = time.time()
+
+		# print('keyword time: ' + str(keyword_time - score_time))
+		print('score gen time: ' + str(score_time - image_time))
+		print('image text gen time: ' + str(image_time - start_time))
 		return jsonify({"text": text, "score": score, "keywords": keywords})
 	else:
 		return jsonify({"text": text})
