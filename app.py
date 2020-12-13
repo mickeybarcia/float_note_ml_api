@@ -68,7 +68,7 @@ def generate_entry_ml_from_text():
 	check_auth(request.headers)
 	entry_data = request.json
 	text = entry_data["text"]
-	score = text_to_sentiment(text)
+	score = text_to_sentiment(text, text_subscription_key)
 	keywords = text_to_keywords(text)
 	return jsonify({"text": text, "score": score, "keywords": keywords})
 

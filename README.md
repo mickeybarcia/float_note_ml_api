@@ -10,6 +10,6 @@
 ## local development
 ```
 # get .env for development environment values
-pip install -r requirements
+pip install -r requirements.txt
 python app.py
 ```
