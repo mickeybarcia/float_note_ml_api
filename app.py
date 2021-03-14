@@ -8,7 +8,9 @@ import pprint
 import time
 import random
 import os
-import time 
+import time
+import sys 
+import traceback
 
 from keywords import text_to_keywords
 import summary
@@ -35,6 +37,7 @@ def check_auth(headers):
 
 @app.errorhandler(Exception)
 def handle_error(e):
+    traceback.print_tb(e.__traceback__)
     code = 500
     if isinstance(e, HTTPException):
         code = e.code
@@ -44,9 +47,10 @@ def handle_error(e):
 def generate_entry_ml_from_image():
 	check_auth(request.headers)
 	images = request.files.getlist("page")
-	
 	start_time = time.time() 
 	text = img_to_text(images, img_subscription_key)
+	if not text:
+		raise Exception('Unable to extract text')
 	image_time = time.time() 
 	
 	if request.args.get('analyze') == "1":
@@ -82,4 +86,4 @@ def get_summary():
 if __name__ == "__main__":
 	for ex in default_exceptions:
 		app.register_error_handler(ex, handle_error)
-	app.run(debug = True)
+	app.run(debug=True, use_debugger=True)

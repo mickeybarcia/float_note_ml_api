@@ -5,8 +5,8 @@ import pyocr.builders
 import time
 import requests
 
-vision_base_url = "https://eastus.api.cognitive.microsoft.com/vision/v1.0/"
-text_recognition_url = vision_base_url + "recognizeText"
+vision_base_url = "https://eastus.api.cognitive.microsoft.com/vision/v3.1/"
+text_recognition_url = vision_base_url + "ocr?language=unk&detectOrientation=true"
 
 # tools = pyocr.get_available_tools()
 # tool = tools[0]
@@ -22,19 +22,18 @@ text_recognition_url = vision_base_url + "recognizeText"
 #     return text_statement
 
 def img_to_text(images, img_subscription_key):
-    text_statement = ""
+    lines = []
     headers = {'Ocp-Apim-Subscription-Key': img_subscription_key, 'Content-Type': 'application/octet-stream'}
     params = {"mode": "Handwritten"}
     for image in images:
         try:
             response = requests.post(text_recognition_url, headers=headers, params=params, data=image)
-            analysis = {}
-            while "recognitionResult" not in analysis:
-                response_final = requests.get(response.headers["Operation-Location"], headers=headers)
-                analysis = response_final.json()
-                # time.sleep(0.5)
-            polygons = [line["text"] for line in analysis["recognitionResult"]["lines"]]
-            text_statement += " ".join(polygons)
+            for region in response.json()["regions"]:
+                for line in region["lines"]:
+                    words = []
+                    for word in line["words"]:
+                        words.append(word["text"])
+                    lines.append(' '.join(words))
         except:
-            text_statement += ""
-    return text_statement
+            print('Unable to extract text from image ' + image.filename)
+    return '\n'.join(lines) if len(lines) > 0 else None
