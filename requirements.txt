@@ -8,4 +8,4 @@ pyocr==0.7.2
 textblob==0.15.3
 numpy==1.18.2
 networkx==2.4
-waitress==1.4.3
+waitress==2.1.1
